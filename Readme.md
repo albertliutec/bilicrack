@@ -7,6 +7,6 @@
 写了递归，可以直接根据root目录向下递归查
 
 ## 代码使用
-使用java ide工具打开项目，在main/resource/path.txt中第一行输入下载视频的root文件夹目录，运行项目即可。
+使用java ide工具打开项目，在main/resource/path.txt中第一行输入下载视频的root文件夹目录，打开init运行项目即可。
 
 比如，我下了一套视频，下到了A目录，A目录下有01,02,03...目录，目录下才是视频文件，此时只需要在path.txt文件中，写入A目录的路径即可
