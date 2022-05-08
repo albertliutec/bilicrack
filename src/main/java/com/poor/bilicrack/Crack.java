@@ -1,3 +1,5 @@
+package com.poor.bilicrack;
+
 import java.io.*;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -22,13 +24,12 @@ public class Crack {
         List<File> mp4TargetList = mp4SourceList.stream().map(item -> {
             String[] split = item.getName().split("\\.");
             split[0] += "0";
-            String newPath = item.getAbsolutePath() + split[0] + "." + split[1];
+            String newPath = item.getParent() + "\\" + split[0] + "." + split[1];
             return new File(newPath);
         }).collect(Collectors.toList());
 
         for (int i = 0; i < mp4SourceList.size(); i++) {
             String result = this.crackFile(mp4SourceList.get(i), mp4TargetList.get(i));
-            mp4SourceList.get(i).delete();
             System.out.println(result);
         }
 
@@ -108,7 +109,6 @@ public class Crack {
                 flag++;
             }
             output.flush();
-            return source + " ： success";
         } catch (IOException e) {
             e.printStackTrace();
             return source + " ： failed";
@@ -129,21 +129,31 @@ public class Crack {
                 }
             }
         }
+
+        // 删除源文件并重命名
+        if (source.delete() && target.renameTo(source)) {
+            return source + " ： success";
+        }else {
+            return source + " ： failed";
+        }
     }
 
     /**
      * 读取配置文件中的根路径
+     *
      * @return path
      */
     public String readPath() {
-        FileInputStream input = null;
+        InputStream input = null;
         InputStreamReader inputReader = null;
         BufferedReader reader = null;
         try {
-            input = new FileInputStream("path.txt");
-            inputReader = new InputStreamReader(input);
-            reader = new BufferedReader(inputReader);
-            return reader.readLine();
+            input = getClass().getClassLoader().getResourceAsStream("path.txt");
+            if (input != null) {
+                inputReader = new InputStreamReader(input);
+                reader = new BufferedReader(inputReader);
+                return reader.readLine();
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
