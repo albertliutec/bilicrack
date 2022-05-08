@@ -40,7 +40,7 @@ public class Crack {
      * @param rootPath 根路径
      * @return mp4文件对象
      */
-    public List<File> searchFiles(String rootPath) {
+    private List<File> searchFiles(String rootPath) {
         File rootFile = new File(rootPath);
         List<File> rootFileList = new LinkedList<>();
         // 如果root是个file直接返回只有root的list
@@ -88,7 +88,7 @@ public class Crack {
      * @param target 目的文件路径
      * @return 成功或失败
      */
-    public String crackFile(File source, File target) {
+    private String crackFile(File source, File target) {
         FileInputStream input = null;
         FileOutputStream output = null;
 
